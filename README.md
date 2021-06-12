@@ -1,40 +1,29 @@
-## Laboratory work X
+# Шумилишский ИУ8-22 Лабораторная 10
 
 Данная лабораторная работа посвещена изучению процесса создания и конфигурирования виртуальной среды разработки с использованием **Vagrant**
 
-```sh
-$ open https://www.vagrantup.com/intro/index.html
-```
-
-## Tasks
-
-- [ ] 1. Ознакомиться со ссылками учебного материала
-- [ ] 2. Выполнить инструкцию учебного материала
-- [ ] 3. Составить отчет и отправить ссылку личным сообщением в **Slack**
-
 ## Tutorial
-
+Присваиваем значения переменным:
 ```sh
 $ export GITHUB_USERNAME=<имя_пользователя>
 $ export PACKAGE_MANAGER=<пакетный_менеджер>
 ```
-
+Устанавливаем vagrant
 ```sh
 $ cd ${GITHUB_USERNAME}/workspace
 $ ${PACKAGE_MANAGER} install vagrant
 ```
-
+Смотрим версию vagrand, создаем новую виртуалку, выводим vagrandfile
 ```sh
 $ vagrant version
 $ vagrant init bento/ubuntu-19.10
 $ less Vagrantfile
 $ vagrant init -f -m bento/ubuntu-19.10
 ```
-
 ```sh
 $ mkdir shared
 ```
-
+Записываем в файл Vagrantfile команды для запуска скрипта
 ```sh
 $ cat > Vagrantfile <<EOF
 \$script = <<-SCRIPT
@@ -49,7 +38,7 @@ sudo chown -R developer /home/developer
 SCRIPT
 EOF
 ```
-
+Записываем в файл Vagrantfile конфигурацию для vagrant-vbguest
 ```sh
 $ cat >> Vagrantfile <<EOF
 
@@ -58,7 +47,6 @@ Vagrant.configure("2") do |config|
   config.vagrant.plugins = ["vagrant-vbguest"]
 EOF
 ```
-
 ```sh
 $ cat >> Vagrantfile <<EOF
 
@@ -78,7 +66,15 @@ $ cat >> Vagrantfile <<EOF
 end
 EOF
 ```
-
+"vagrant plugin install vagrant-vbguest" устраняет неполадки  
+vagrant validate - проверка корректности файла Vagrantfile   
+Смотрим список виртуальных машин и их статусы   
+Запускаем виртуальной машины   
+Информация о проброске портов  
+Подключение по ssh к запущенной виртуальной машине   
+Посмотреть список сохранённых состояний виртуальной машины   
+Остановить виртуальную машину   
+Восстановить состояние виртуальной машины по снимку
 ```sh
 $ vagrant validate
 
@@ -94,7 +90,7 @@ $ vagrant snapshot list
 $ vagrant halt
 $ vagrant snapshot pop
 ```
-
+Настраиваем Vagrant для VMware
 ```ruby
   config.vm.provider :vmware_esxi do |esxi|
 
@@ -112,7 +108,6 @@ $ vagrant snapshot pop
     esxi.guest_disk_type = 'thin'
   end
 ```
-
 ```sh
 $ vagrant plugin install vagrant-vmware-esxi
 $ vagrant plugin list
@@ -130,16 +125,4 @@ $ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
 $ cd reports/lab${LAB_NUMBER}
 $ edit REPORT.md
 $ gist REPORT.md
-```
-
-## Links
-
-- [VirualBox](https://www.virtualbox.org/)
-- [Vagrant providers](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins#providers)
-- [Vagrant vbguest plugin](https://github.com/dotless-de/vagrant-vbguest)
-- [Vagrant disksize plugin](https://github.com/sprotheroe/vagrant-disksize)
-- [Vagrant vmware esxi plugin](https://github.com/josenk/vagrant-vmware-esxi)
-
-```
-Copyright (c) 2015-2021 The ISC Authors
 ```
